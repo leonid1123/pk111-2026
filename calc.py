@@ -46,13 +46,19 @@ class App:
         name1 = input('Как зовут первого игрока? ')
         name2 = input('Как зовут второго игрока? ')
 
-        d1 = random.randint(1,6)
-        d2 = random.randint(1, 6)
-        d3 = random.randint(1, 6)
-        d4 = random.randint(1, 6)
-        d5 = random.randint(1, 6)
-        print(f'Игрок {name1} выбросил: {d1} {d2} {d3} {d4} {d5}')
-
+        dices = [random.randint(1,6),
+                random.randint(1,6),
+                random.randint(1,6),
+                random.randint(1,6),
+                random.randint(1,6)]
+        for item in range(1,4):
+            print(f'Попытка номер {item}')
+            print(dices)
+            ans = input('какие перебросить? /1,2,3,4,5, 0-ничего /')
+            num = ans.split(',')
+            if num[0] != '0':
+                for i in num:
+                    dices[int(i)-1] = random.randint(1,6)
 
 
 app = App()
