@@ -1,11 +1,39 @@
 from tkinter import (Tk, Button,
                      Listbox,Entry,NSEW,
-                     Variable)
+                     Variable, Label)
 import pymysql.cursors
 
 
 class App(Tk):
     def __init__(self):
+        super().__init__()
+        self.conn = pymysql.connect(host="192.168.1.61",
+                                    user='pk111',
+                                    password='1234',
+                                    database='pk_111')
+        self.cursor = self.conn.cursor()
+        self.login = Entry()
+        self.password = Entry()
+        self.btn = Button(text='Вход', command=self.auth)
+        log_lbl = Label(text='Введите логин')
+        pas_lbl = Label(text='Введите пароль')
+        log_lbl.grid(row=0, column=0)
+        self.login.grid(row=1, column=0)
+        pas_lbl.grid(row=2, column=0)
+        self.password.grid(row=3, column=0)
+        self.btn.grid(row=4, column=0)
+        self.mainloop()
+
+    def auth(self):
+        login = self.login.get()
+        password = self.password.get()
+        sql = 'SELECT * FROM users WHERE login=%s AND password=%s'
+        info = (login, password)
+        self.cursor.execute(sql,info)
+        ans = self.cursor.fetchone()
+        print(ans)
+
+    def win3(self):
         super().__init__()
         self.messages = []
         self.msg_var = Variable(value=self.messages)
